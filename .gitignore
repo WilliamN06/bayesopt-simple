@@ -1,0 +1,311 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.pytest_cache/
+test-results/
+tests/__pycache__/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# pyenv
+.python-version
+
+# Environments
+.env
+.venv
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+pythonenv*
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.mypy_cache
+
+# Pyre type checker
+.pyre/
+
+# PyCharm
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Visual Studio
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+*.swp
+*.swo
+*~
+
+# OSX
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*.orig
+
+# Logs
+logs/
+*.log
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Data files
+*.pkl
+*.pickle
+*.pt
+*.pth
+*.h5
+*.hdf5
+*.csv
+*.parquet
+
+# Local configuration
+.config
+bayesopt.ini
+config.ini
+local_config.py
+
+# Development files
+*.tmp
+*.temp
+*.bak
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Sphinx documentation
+docs/_build/
+docs/_autosummary/
+docs/api/
+
+# Coverage.py
+.coverage
+.coverage.*
+htmlcov/
+
+# Hypothesis
+.hypothesis/
+
+# Profiling data
+*.prof
+*.pstats
+
+# API keys / secrets
+.secrets
+*.pem
+*.key
+*.crt
+
+# Docker
+*.dockerignore
+.dockerignore
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# Node (if using any frontend)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Package manager files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build outputs
+*.whl
+*.tar.gz
+
+# Tox
+.tox/
+
+# mypy
+.mypy_cache/
+
+# pytype
+.pytype/
+
+# Cython
+*.c
+*.cpp
+
+# Cython debug
+cython_debug/
+
+# Profiling
+*.prof
+
+# Compiled Python files
+*.pyc
+*.pyo
+
+# PEP 582
+__pypackages__/
+
+# Local history
+.history/
+
+# JetBrains
+.idea/
+*.iml
+
+# VSCode local settings
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Development environment
+.devcontainer/
+.virtualenvs/
+
+# Coverage reports
+*.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Test artifacts
+.pytest_cache/
+.tox/
+tests/.pytest_cache/
+
+# Generated files
+*.generated.py
+gen/
+generated/
+
+# PySpark
+metastore_db/
+derby.log
+
+# Dask
+dask-worker-space/
+
+# MLflow
+mlruns/
+
+# WandB
+wandb/
+
+# Ray
+ray_results/
+
+# Data directories
+data/
+datasets/
+models/
+outputs/
+artifacts/
+saved_models/
+
+# Jupyter nbconvert
+*.nbconvert.*
+
+# Local .env files
+.env.local
+.env.*.local
+
+# Pytest cache
+.pytest_cache/
+
+# Ruff cache
+.ruff_cache/
+
+# Black cache
+.black_cache/
+
+# Mypy cache
+.mypy_cache/
+
+# Pyre
+.pyre/
+
+# Pyright
+.pyright/

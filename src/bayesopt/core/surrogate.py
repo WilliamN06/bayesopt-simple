@@ -3,18 +3,12 @@
 from typing import Dict, Optional, Tuple, Union
 import numpy as np
 from sklearn.gaussian_process import GaussianProcessRegressor
-from sklearn.gaussian_process.kernels import Matern, RBF, WhiteKernel, ConstantKernel
-from sklearn.gaussian_process.kernels import Kernel
+from sklearn.gaussian_process.kernels import Matern, RBF, Kernel
 import warnings
 
 
 class GPSurrogate:
-    """
-    Wrapper for scikit-learn's Gaussian Process Regressor.
-    
-    Uses Matern 5/2 kernel with automatic hyperparameter optimisation.
-
-    """
+    """Wrapper for scikit-learn's Gaussian Process Regressor."""
     
     def __init__(
         self,
@@ -50,33 +44,22 @@ class GPSurrogate:
             return kernel_spec
         
         if kernel_spec == 'matern52':
-            # Matern 5/2 kernel (standard choice for BO)
             return Matern(length_scale=1.0, length_scale_bounds=(1e-3, 1e3), nu=2.5)
         elif kernel_spec == 'rbf':
-            # RBF kernel (infinite smoothness)
             return RBF(length_scale=1.0, length_scale_bounds=(1e-3, 1e3))
         else:
             raise ValueError(f"Unknown kernel: {kernel_spec}. Choose 'matern52' or 'rbf'.")
     
     def fit(self, X: np.ndarray, y: np.ndarray) -> None:
-        """
-        Fit the GP to observations.
-
-        """
+        """Fit the GP to observations."""
         if len(X) == 0:
             raise ValueError("Cannot fit GP with empty X")
-        
         if len(X) != len(y):
             raise ValueError(f"X length ({len(X)}) doesn't match y length ({len(y)})")
         
-        # Convert to 2D if needed
         if X.ndim == 1:
             X = X.reshape(-1, 1)
         
-        # Check for duplicates - warn but continue
-        # sklearn handles duplicates with noise alpha
-        
-        # Fit the GP
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             self.gp.fit(X, y)
@@ -91,24 +74,10 @@ class GPSurrogate:
         return_std: bool = True,
         return_cov: bool = False
     ) -> Union[Tuple[np.ndarray, np.ndarray], Tuple[np.ndarray, np.ndarray, np.ndarray]]:
-        """
-        Make predictions at new points.
-        
-        Parameters
-        ----------
-        X : np.ndarray, shape (n_samples, n_features)
-            Points to predict at.
-        return_std : bool, default=True
-            Whether to return standard deviations.
-        return_cov : bool, default=False
-            Whether to return full covariance matrix.
-            
-    
-        """
+        """Make predictions at new points."""
         if not self._is_fitted:
             raise RuntimeError("GP not fitted yet. Call fit() first.")
         
-        # Convert to 2D if needed
         if X.ndim == 1:
             X = X.reshape(-1, 1)
         
@@ -123,11 +92,7 @@ class GPSurrogate:
             return mean, std
     
     def get_stats(self) -> Dict[str, Union[float, np.ndarray]]:
-        """
-        Extract statistics from the fitted GP.
-        
-    
-        """
+        """Extract statistics from the fitted GP."""
         if not self._is_fitted:
             return {
                 'lengthscales': None,
@@ -143,41 +108,33 @@ class GPSurrogate:
             'n_samples': len(self._X_train) if self._X_train is not None else 0
         }
         
-        # Get kernel parameters
         kernel = self.gp.kernel_
         kernel_params = kernel.get_params()
         
-        # Try to extract lengthscales
         lengthscales = None
         if hasattr(kernel, 'length_scale'):
             lengthscales = kernel.length_scale
         elif hasattr(kernel, 'k1') and hasattr(kernel.k1, 'length_scale'):
-            # Matern kernel inside ConstantKernel * Matern
             lengthscales = kernel.k1.length_scale
         elif hasattr(kernel, 'k2') and hasattr(kernel.k2, 'length_scale'):
-            # ConstantKernel * Matern or RBF
             lengthscales = kernel.k2.length_scale
         
         if lengthscales is not None:
             stats['lengthscales'] = np.array(lengthscales).flatten()
         
-        # Get noise (alpha)
         stats['noise'] = float(self.gp.alpha) if isinstance(self.gp.alpha, (int, float)) else None
         
-        # Get log marginal likelihood
         try:
             stats['log_likelihood'] = float(self.gp.log_marginal_likelihood_value_)
         except (AttributeError, ValueError):
             stats['log_likelihood'] = None
         
-        # Full kernel parameters
         stats['kernel_parameters'] = kernel_params
         
         return stats
     
     def reset(self) -> None:
-        """Reset the GP state (for a new optimisation)."""
-        # Re-initialise the GP
+        """Reset the GP state for a new optimisation."""
         self.gp = GaussianProcessRegressor(
             kernel=self._create_kernel(self.kernel_name),
             n_restarts_optimizer=self.n_restarts,
@@ -194,16 +151,7 @@ class GPSurrogate:
         return self._is_fitted
     
     def get_training_data(self) -> Tuple[np.ndarray, np.ndarray]:
-        """
-        Get the training data.
-        
-        Returns
-        -------
-        X : np.ndarray
-            Training inputs.
-        y : np.ndarray
-            Training targets.
-        """
+        """Get the training data."""
         if not self._is_fitted:
             return None, None
         return self._X_train, self._y_train
